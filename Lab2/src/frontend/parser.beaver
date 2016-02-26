@@ -33,14 +33,14 @@
 	Module = MODULE ID LCURLY Imports Declarations RCURLY;
 	
 	Import = IMPORT ID SEMICOLON;
-	Imports = Imports Import
+	Imports = Import Imports
 		|
 		;
 	
 	Declaration = FunctionDeclaration 
 		| FieldDeclaration 
 		| TypeDeclaration;
-	Declarations = Declarations Declaration
+	Declarations = Declaration Declarations
 		|
 		;
 		
@@ -58,9 +58,14 @@
 	PrimitiveType = INT 
 		| VOID 
 		| BOOLEAN;
-	ArrayType = TypeName LBRACKET RBRACKET;
+	ArrayType = PrimitiveType LBRACKET RBRACKET
+		| ArrayType LBRACKET RBRACKET;
+		
+	ClassArrayType = ID LBRACKET RBRACKET;
+	
 	TypeName = PrimitiveType
 		| ArrayType
+		| ClassArrayType
 		| ID;
 	
 	Parameter = TypeName ID;
@@ -68,7 +73,7 @@
 		|Parameters COMMA Parameter
 		;
 	
-	Statements = Statements Statement
+	Statements = Statement Statements
 		| 
 		;
 	Statement = TypeName ID SEMICOLON
@@ -115,7 +120,7 @@
 		| RHSExpression;
 	
 	Expressions = Expression
-		| Expressions COMMA Expression
+		| Expression COMMA Expressions
 		;
 		
 	PrimaryExpression = LHSExpression
