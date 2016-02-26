@@ -59,13 +59,12 @@
 		| VOID 
 		| BOOLEAN;
 	ArrayType = PrimitiveType LBRACKET RBRACKET
-		| ArrayType LBRACKET RBRACKET;
-		
-	ClassArrayType = ID LBRACKET RBRACKET;
+		| ArrayType LBRACKET RBRACKET
+		| ID LBRACKET RBRACKET;
+
 	
 	TypeName = PrimitiveType
 		| ArrayType
-		| ClassArrayType
 		| ID;
 	
 	Parameter = TypeName ID;
@@ -84,9 +83,13 @@
 		| BREAK SEMICOLON
 		| RETURN Expression? SEMICOLON
 		| Expression SEMICOLON;
+
 	
 	LHSExpression = ID
-		| LHSExpression LBRACKET Expression RBRACKET;
+		| ArrayAccess;
+		
+	ArrayAccess = ID LBRACKET Expression RBRACKET
+		| ArrayAccess LBRACKET Expression RBRACKET;
 		
 	RHSExpression = ArithmeticExpression 
 		| ArithmeticExpression ComparisonOp ArithmeticExpression;
